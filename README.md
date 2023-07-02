@@ -1,5 +1,5 @@
 # 🔮 Destiny's cards
-### Tarot card reading app
+### Гадание на Таро
 
 <div style="width:100%;text-align:center;">
    <p align="center">
@@ -14,6 +14,9 @@
       <a href="https://soundcloud.com/f3rni"><img alt="SoundCloud" src="https://img.shields.io/badge/-SoundCloud-orange" ></a>
    </p>
 </div>
+
+|      ![](screenshots/main.png)      |  ![](screenshots/cards.png)  | ![](screenshots/meaning.png) |
+|:-----------------------------------:|:----------------------------:|:---------------------------:|
 
 ----------
 
