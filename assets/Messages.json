@@ -1,0 +1,9 @@
+{
+    "instructionMain" : "Выберите тип расклада",
+	"rotated": "(перевернутая)",
+    "layoutCreate": "Создать расклад",
+    "layoutCreating": "Расклад генерируется...",
+    "layoutRegenerate": "Новый расклад",
+    "selectCardsLeft": "Осталось выбрать карт: ",
+    "pressToRead": "Нажмите на карту, чтобы узнать значение"
+}
