@@ -19,15 +19,14 @@ import { View, ScrollView, Text, Image, StatusBar, TouchableOpacity } from "reac
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { styles, colors } from "./Style";
-
-const MESSAGES = require("./assets/Messages.json");
-
-const ICON = require("./assets/icon.png");
-
 import LayoutScreen from "./LayoutScreen";
-
 import { LAYOUTS } from "./Cards"
 
+// User messages
+const MESSAGES = require("./assets/Messages.json");
+
+// App icon
+const ICON = require("./assets/icon.png");
 
 // Stack Navigator
 const Stack = createStackNavigator();
@@ -41,6 +40,7 @@ const stackScreenBuilder = () => {
   LAYOUTS.forEach(layout => {
     stackScreens.push(
       <Stack.Screen
+        key={layout.title}
         name={layout.title}
         component={LayoutScreen}
         options={{
@@ -70,7 +70,7 @@ const renderScreenSelector = (navigation) => {
   const layoutSelectors = [];
   LAYOUTS.forEach(layout => {
     layoutSelectors.push(
-      <TouchableOpacity style={styles.buttonMainScreen} title={layout.title} onPress={() => navigation.navigate(layout.title)}>
+      <TouchableOpacity key={layout.title} style={styles.buttonMainScreen} title={layout.title} onPress={() => navigation.navigate(layout.title)}>
         <Text style={styles.text}>{layout.title}</Text>
       </TouchableOpacity>
     );

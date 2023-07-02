@@ -103,7 +103,7 @@ function LayoutScreen({ route, navigation }) {
     /**
      * Generates new card layout
      */
-    const createLayout = async () => {
+    const createLayout = () => {
         // Reset data
         setSelectedCards(new Array(layoutCardsRaw.length).fill(false));
         setOpenedCards([]);
@@ -112,10 +112,6 @@ function LayoutScreen({ route, navigation }) {
 
         // Set state to generating
         setLayoutState(LAYOUT_STATE_GENERATING);
-
-        // Initialize sound
-        const { sound } = await Audio.Sound.createAsync(SOUND_FLIP);
-        setSound(sound);
 
         // Create new GET request with timeout
         const cardNumbersRequest = new XMLHttpRequest();
@@ -191,6 +187,8 @@ function LayoutScreen({ route, navigation }) {
         }
 
         // Play flip sound
+        const { sound } = await Audio.Sound.createAsync(SOUND_FLIP);
+        setSound(sound);
         await sound.playAsync();
 
         // Hide current card
@@ -246,7 +244,7 @@ function LayoutScreen({ route, navigation }) {
             imageStyle.height = layout.openedCardHeight;
             selectedCardElements.push(
                 <TouchableOpacity
-                    key={layout.title + "O" + openedCards[i].index}
+                    key={openedCards[i].index + 1000}
                     style={styles.imageContainer}
                     onPress={() => cardMeaning(openedCards[i].index, i, openedCards[i].rotated)} >
                     <Image
@@ -269,7 +267,7 @@ function LayoutScreen({ route, navigation }) {
         const cardRows = [];
         for (let row = 0; row < layout.rows; row++) {
             cardRows.push(
-                <View style={styles.imageParentContainer}>
+                <View key={row} style={styles.imageParentContainer}>
                     {renderCardsRow(row)}
                 </View>
             );
@@ -292,7 +290,7 @@ function LayoutScreen({ route, navigation }) {
             }
             cardRow.push(
                 <TouchableOpacity
-                    key={layout.title + cardIndex}
+                    key={cardIndex}
                     style={styles.imageContainer}
                     onPress={async () => cardProcessor(cardIndex)} >
                     <Image
@@ -312,21 +310,21 @@ function LayoutScreen({ route, navigation }) {
         switch (layoutState) {
             case LAYOUT_STATE_GENERATING:
                 return (
-                    <TouchableOpacity style={styles.button} title={MESSAGES.layoutCreating}>
+                    <TouchableOpacity key={MESSAGES.layoutCreating} style={styles.button} title={MESSAGES.layoutCreating}>
                         <Text style={styles.text}>{MESSAGES.layoutCreating}</Text>
                     </TouchableOpacity>
                 );
 
             case LAYOUT_STATE_DONE:
                 return (
-                    <TouchableOpacity style={styles.button} title={MESSAGES.layoutRegenerate} onPress={async () => createLayout()}>
+                    <TouchableOpacity key={MESSAGES.layoutRegenerate} style={styles.button} title={MESSAGES.layoutRegenerate} onPress={createLayout}>
                         <Text style={styles.text}>{MESSAGES.layoutRegenerate}</Text>
                     </TouchableOpacity>
                 );
 
             default:
                 return (
-                    <TouchableOpacity style={styles.button} title={MESSAGES.layoutCreate} onPress={async () => createLayout()}>
+                    <TouchableOpacity key={MESSAGES.layoutCreate} style={styles.button} title={MESSAGES.layoutCreate} onPress={createLayout}>
                         <Text style={styles.text}>{MESSAGES.layoutCreate}</Text>
                     </TouchableOpacity>
                 );
