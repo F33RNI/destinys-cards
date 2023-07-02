@@ -23,10 +23,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#423b52"
-      }
+      },
+      "package": "com.f33rni.destinyscards"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "6692668e-756d-41db-bceb-defb2fdc4114"
+      }
     }
   }
 }
