@@ -5,6 +5,7 @@
     "description": "Tarot cards",
     "version": "1.0.0",
     "orientation": "portrait",
+    "owner": "f33rni",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
