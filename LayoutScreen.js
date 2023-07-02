@@ -16,6 +16,7 @@
 
 import React, { useState } from "react";
 import { Audio } from "expo-av";
+import AsyncStorage from "@react-native-async-storage/async-storage"
 import {
     ScrollView,
     View,
@@ -187,9 +188,12 @@ function LayoutScreen({ route, navigation }) {
         }
 
         // Play flip sound
-        const { sound } = await Audio.Sound.createAsync(SOUND_FLIP);
-        setSound(sound);
-        await sound.playAsync();
+        const value = await AsyncStorage.getItem("playFlipSound");
+        if (value !== null && value === true.toString()) {
+            const { sound } = await Audio.Sound.createAsync(SOUND_FLIP);
+            setSound(sound);
+            await sound.playAsync();
+        }
 
         // Hide current card
         selectedCards[cardIndex] = false;

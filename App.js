@@ -14,8 +14,17 @@
  * limitations under the License.
  */
 
-import React from 'react';
-import { View, ScrollView, Text, Image, StatusBar, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  ScrollView,
+  Text,
+  Image,
+  StatusBar,
+  TouchableOpacity,
+  Switch
+} from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage"
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { styles, colors } from "./Style";
@@ -99,16 +108,63 @@ export default function App() {
 
 // First Window component
 function LayoutSelector({ navigation }) {
+  const [playFlipSound, setPlayFlipSound] = useState(false);
+
+  useEffect(() => {
+    loadPlayFlipSound();
+  }, []);
+
+  const loadPlayFlipSound = async () => {
+    try {
+      const value = await AsyncStorage.getItem("playFlipSound");
+      if (value !== null) {
+        setPlayFlipSound(value === true.toString());
+      }
+
+      // Set true on first run
+      else {
+        setPlayFlipSound(true);
+        await savePlayFlipSound(true);
+      }
+    } catch (error) {
+      console.log("Error loading playFlipSound value:", error);
+    }
+  };
+
+  const savePlayFlipSound = async (value) => {
+    try {
+      await AsyncStorage.setItem("playFlipSound", value.toString());
+    } catch (error) {
+      console.log("Error saving playFlipSound value: " + AsyncStorage.toString(), error);
+    }
+  };
+
+  const toggleSwitch = async (value) => {
+    await setPlayFlipSound(value);
+    await savePlayFlipSound(value);
+  };
+
   return (
     <ScrollView style={{ flex: 1 }} contentContainerStyle={{ flexGrow: 1 }}>
       <View style={styles.container}>
+        <StatusBar style="auto" />
+
         <Image source={ICON} style={styles.imageIcon} />
 
         <Text style={styles.textInstruction}>{MESSAGES.instructionMain}</Text>
 
         {renderScreenSelector(navigation)}
 
-        <StatusBar style="auto" />
+        <View style={styles.switchContainer}>
+          <Text style={styles.textInstruction}>{MESSAGES.flipSound}</Text>
+          <Switch
+            trackColor={{ true: colors.primary, false: "gray" }}
+            thumbColor={colors.primary}
+            style={styles.switch}
+            value={playFlipSound}
+            onValueChange={toggleSwitch}
+          />
+        </View>
       </View>
     </ScrollView>
   );

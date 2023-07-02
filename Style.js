@@ -61,22 +61,6 @@ const styles = StyleSheet.create({
         padding: 14,
     },
 
-    textfield: {
-        backgroundColor: '#FFFFFF',
-        color: '#550044',
-        borderRadius: 5,
-        padding: 10,
-    },
-
-    label: {
-        color: '#550044',
-        fontSize: 14,
-    },
-
-    icon: {
-        color: '#FFFFFF',
-    },
-
     imageContainer: {
         marginLeft: 2,
         marginRight: 2,
@@ -108,7 +92,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginVertical: 5
-    }
+    },
+
+    switchContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 20,
+    },
+
+    switch: {
+        marginLeft: 5,
+    },
 
 });
 
