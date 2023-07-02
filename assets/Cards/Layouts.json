@@ -16,6 +16,26 @@
 		"openedCardHeight": 220
 	},
 	{
+		"title": "Совет (все арканы)",
+		"instruction": "Вы получите совет от карт Таро",
+		"cards": [
+			"major",
+			"cups",
+			"pentacles",
+			"swords",
+			"wands"
+		],
+		"cardPositionName": [
+			""
+		],
+		"useMeaning": "advice",
+		"canRotate": false,
+		"rows": 7,
+		"columns": 12,
+		"usefulCards": 1,
+		"openedCardHeight": 220
+	},
+	{
 		"title": "Ближайшее будущее - 8 карт (все арканы)",
 		"instruction": "Таро расклад позволит узнать что ждет вас в будущем, сделать выводы и принять верное решение. В раскладе присутствуют все 78 арканов, каждый из которых может дать ответ на вашу ситуацию в ближайшем будущем",
 		"cards": [
