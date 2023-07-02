@@ -20,5 +20,9 @@
 
 ----------
 
-### README in progress...
+## 🏗️ Сборка и запуск
 
+- `git clone https://github.com/F33RNI/destinys-cards/`
+- `cd destinys-cards`
+- `npm install`
+- `npm start`
