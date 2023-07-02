@@ -36,7 +36,18 @@ const styles = StyleSheet.create({
         color: colors.text,
         borderRadius: 5,
         padding: 10,
-        margin:10
+        margin: 10
+    },
+
+    buttonMainScreen: {
+        backgroundColor: colors.primary,
+        color: colors.text,
+        borderRadius: 5,
+        padding: 10,
+        margin: 10,
+        width: 340,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 
     text: {
@@ -89,7 +100,7 @@ const styles = StyleSheet.create({
     imageFrontRotated: {
         aspectRatio: 0.5666,
         height: 100,
-        transform: [{rotate: '180deg'}]
+        transform: [{ rotate: '180deg' }]
     },
 
     imageParentContainer: {

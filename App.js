@@ -70,7 +70,7 @@ const renderScreenSelector = (navigation) => {
   const layoutSelectors = [];
   LAYOUTS.forEach(layout => {
     layoutSelectors.push(
-      <TouchableOpacity style={styles.button} title={layout.title} onPress={() => navigation.navigate(layout.title)}>
+      <TouchableOpacity style={styles.buttonMainScreen} title={layout.title} onPress={() => navigation.navigate(layout.title)}>
         <Text style={styles.text}>{layout.title}</Text>
       </TouchableOpacity>
     );

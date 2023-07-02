@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { Audio } from "expo-av";
 import {
     ScrollView,
     View,
@@ -36,7 +37,11 @@ import {
     IMAGE_BACK
 } from "./Cards"
 
+// User messages
 const MESSAGES = require("./assets/Messages.json");
+
+// Flip sound
+const SOUND_FLIP = require("./assets/Sounds/flip.mp3");
 
 // Layout generating states
 const LAYOUT_STATE_INIT = 0;
@@ -87,10 +92,18 @@ function LayoutScreen({ route, navigation }) {
     // LAYOUT_STATE_INIT / LAYOUT_STATE_GENERATING / LAYOUT_STATE_DONE
     const [layoutState, setLayoutState] = useState(LAYOUT_STATE_INIT);
 
+    // Sound for card flip
+    const [sound, setSound] = useState();
+    React.useEffect(() => {
+        return sound
+            ? () => { sound.unloadAsync(); }
+            : undefined;
+    }, [sound]);
+
     /**
      * Generates new card layout
      */
-    const createLayout = () => {
+    const createLayout = async () => {
         // Reset data
         setSelectedCards(new Array(layoutCardsRaw.length).fill(false));
         setOpenedCards([]);
@@ -99,6 +112,10 @@ function LayoutScreen({ route, navigation }) {
 
         // Set state to generating
         setLayoutState(LAYOUT_STATE_GENERATING);
+
+        // Initialize sound
+        const { sound } = await Audio.Sound.createAsync(SOUND_FLIP);
+        setSound(sound);
 
         // Create new GET request with timeout
         const cardNumbersRequest = new XMLHttpRequest();
@@ -167,11 +184,14 @@ function LayoutScreen({ route, navigation }) {
      * Handles click on card
      * @param {Number} cardIndex Real (not random) card index
      */
-    const cardProcessor = (cardIndex) => {
+    const cardProcessor = async (cardIndex) => {
         // Ignore if card is hidden
         if (!selectedCards[cardIndex]) {
             return;
         }
+
+        // Play flip sound
+        await sound.playAsync();
 
         // Hide current card
         selectedCards[cardIndex] = false;
@@ -274,7 +294,7 @@ function LayoutScreen({ route, navigation }) {
                 <TouchableOpacity
                     key={layout.title + cardIndex}
                     style={styles.imageContainer}
-                    onPress={() => cardProcessor(cardIndex)} >
+                    onPress={async () => cardProcessor(cardIndex)} >
                     <Image
                         source={selectedCards[cardIndex] ? IMAGE_BACK : null}
                         style={styles.image} />
@@ -299,14 +319,14 @@ function LayoutScreen({ route, navigation }) {
 
             case LAYOUT_STATE_DONE:
                 return (
-                    <TouchableOpacity style={styles.button} title={MESSAGES.layoutRegenerate} onPress={createLayout}>
+                    <TouchableOpacity style={styles.button} title={MESSAGES.layoutRegenerate} onPress={async () => createLayout()}>
                         <Text style={styles.text}>{MESSAGES.layoutRegenerate}</Text>
                     </TouchableOpacity>
                 );
 
             default:
                 return (
-                    <TouchableOpacity style={styles.button} title={MESSAGES.layoutCreate} onPress={createLayout}>
+                    <TouchableOpacity style={styles.button} title={MESSAGES.layoutCreate} onPress={async () => createLayout()}>
                         <Text style={styles.text}>{MESSAGES.layoutCreate}</Text>
                     </TouchableOpacity>
                 );
